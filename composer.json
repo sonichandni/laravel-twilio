@@ -1,0 +1,59 @@
+{
+    "name": "sonichandni/laravel-twilio",
+    "type": "project",
+    "description": "The Laravel Twilio Integration.",
+    "keywords": ["framework", "laravel", "twilio", "integration"],
+    "license": "MIT",
+    "repositories": [],
+    "require": {
+        "php": "^8.2",
+        "guzzlehttp/guzzle": "^7.2",
+        "illuminate/support": "^9.0|^10.0"
+    },
+    "require-dev": {
+        "brianium/paratest": "^6.4",
+        "fakerphp/faker": "^1.9.1",
+        "laravel/pint": "^1.0",
+        "mockery/mockery": "^1.4.4",
+        "nunomaduro/collision": "^6.1",
+        "orchestra/testbench": "^7.0",
+        "phpmd/phpmd": "^2.12",
+        "phpstan/phpstan": "^1.6",
+        "phpunit/phpunit": "^9.5.10",
+        "spatie/laravel-ignition": "^1.2",
+        "squizlabs/php_codesniffer": "^3.7",
+        "symfony/thanks": "^1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "LaravelTwilio\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LaravelTwilio\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": [],
+            "providers": [
+                "LaravelTwilio\\Providers\\Service"
+            ]
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "symfony/thanks": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

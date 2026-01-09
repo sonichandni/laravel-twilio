@@ -1,0 +1,28 @@
+<?php
+
+declare(strict_types=1);
+
+namespace LaravelTwilio\Tests\Feature;
+
+use Illuminate\Support\Facades\Http;
+use LaravelTwilio\Http\Resources\SendMessage;
+use LaravelTwilio\Tests\TestCase;
+
+class SendMessageTest extends TestCase
+{
+    public function testSendMessageSuccessfully(): void
+    {
+        Http::fake([
+            "*Messages.json" => Http::response(
+                $this->loadFixture("messageSentSuccussfully.json"),
+            ),
+        ]);
+
+        $result = (new SendMessage("18777804236", "Jai Shree Krishn"))
+            ->execute()
+            ->response;
+
+        $this->assertNull($result->error_message);
+        $this->assertEquals(data_get($result, "status"), "queued");
+    }
+}
