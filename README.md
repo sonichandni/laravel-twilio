@@ -1,14 +1,21 @@
 ﻿# Laravel Twilio
 
-A lightweight Laravel package for integrating Twilio SMS APIs with a clean,
-testable architecture.
+A clean, Laravel-idiomatic Twilio integration package focused on SMS messaging, designed with proper separation of concerns and future extensibility.
+
+This package provides:
+- A Facade-based public API
+- A Service layer for use-cases
+- A dedicated HTTP client for Twilio
+- Request-specific Resource objects
+- Full Laravel package auto-discovery
 
 ## Features
 - Send SMS using Twilio API
-- Laravel config driven
-- Clean resource abstraction
-- Feature & integration tests included
-- Easily extendable for future Twilio APIs
+- Clean Facade API (Twilio::sendMessage())
+- Proper Service → Client → Request architecture
+- Laravel 9 / 10 / 11 / 12 compatible
+- Config-driven credentials
+- Testable design (HTTP layer isolated)
 
 ## Installation
 Since this package is not yet published on Packagist, add the repository
@@ -30,10 +37,6 @@ composer require sonichandni/laravel-twilio
 ```
 
 Configuration
-```
-php artisan vendor:publish --tag=twilio-config
-```
-
 .env
 ```
 TWILIO_ACCOUNT_SID=your_account_sid
@@ -41,68 +44,62 @@ TWILIO_AUTH_TOKEN=your_auth_token
 TWILIO_FROM=+1234567890
 ```
 
-Usage
+## Usage
+Send an SMS
 ```
-use LaravelTwilio\Services\Twilio;
-
 Twilio::sendMessage(
-    to: '+919999999999',
-    message: 'Hello from Laravel Twilio!'
+    '+919999999999',
+    'Hello from Laravel Twilio'
 );
 ```
+No imports required — the Facade alias is auto-registered.
 
-Testing
+Check if Twilio is Configured
+```
+if (Twilio::isEnabled()) {
+    Twilio::sendMessage($to, $message);
+}
+```
+
+## Architecture Overview
+This package follows a clean Laravel package architecture:
+```
+Facade (public API)
+   ↓
+Service (use-cases)
+   ↓
+HTTP Client (Twilio transport)
+   ↓
+Request Resource (endpoint + payload)
+```
+
+Why this matters
+- Easy to extend (WhatsApp, Verify)
+- Easy to test (HTTP isolated)
+- No framework leakage into core logic
+- Clear responsibilities
+
+## Testing
+Package tests are provided and designed to be HTTP-fake friendly.
+Run tests:
 ```
 vendor/bin/phpunit
 ```
 
-Roadmap
+## Roadmap
 - WhatsApp messaging
-- OTP / Verify API
-- Message status tracking
+- Twilio Verify (OTP)
+- Message status lookup
+- Retry & failure handling
+- Laravel Notification channel
 
-License <br>
-MIT
-```
-## 3️⃣ Your package is **already better than many first packages**
+## Extending the Package
+- To add a new Twilio feature:
+- Create a new Request class (e.g. SendWhatsAppMessage)
+- Reuse the existing TwilioClient
+- Add a method to the Twilio Service
+- Expose via the Facade
+The public API remains stable.
 
-Why this matters 👇
-
-✔ You added **tests** (most beginners don’t)  
-✔ You used **fixtures** (excellent practice)  
-✔ You designed **resource-based APIs**  
-✔ You separated config, services & resources  
-
-This is **portfolio-grade**, not toy code.
-
----
-
-## 4️⃣ What I recommend next (in order)
-
-### 🔹 Step 1 (Now)
-- Add files above
-- Push to GitHub
-- Make repo public
-
-### 🔹 Step 2 (Optional, next)
-- Tag release `v1.0.0`
-- Add GitHub description + topics
-
-### 🔹 Step 3 (Later)
-- Publish to Packagist
-- Add WhatsApp / Verify APIs
-
----
-
-## 5️⃣ I’ll guide you further — just say the word
-
-I can next:
-- 🔧 Review & optimize `composer.json`
-- 🚀 Prepare **Packagist publish steps**
-- 🧪 Improve test coverage strategy
-- 🏗 Help design next Twilio APIs
-- 📣 Help you announce this on X / LinkedIn
-
-👉 **What do you want to do next?**
-
-```
+## License <br>
+MIT © Chandni Soni
