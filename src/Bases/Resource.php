@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace LaravelTwilio\Bases;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use stdClass;
-use LaravelTwilio\Twilio;
+use LaravelTwilio\Http\Clients\TwilioClient;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 abstract class Resource extends JsonResource
 {
@@ -16,7 +16,7 @@ abstract class Resource extends JsonResource
 
     public function execute(): self
     {
-        $response = (new Twilio())
+        $response = (new TwilioClient())
             ->send($this);
         $this->ingest($response);
 

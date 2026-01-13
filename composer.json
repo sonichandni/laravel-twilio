@@ -41,7 +41,10 @@
             "dont-discover": [],
             "providers": [
                 "LaravelTwilio\\Providers\\Service"
-            ]
+            ],
+            "aliases": {
+                "Twilio": "LaravelTwilio\\Facades\\Twilio"
+            }
         }
     },
     "config": {

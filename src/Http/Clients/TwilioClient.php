@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LaravelTwilio;
+namespace LaravelTwilio\Http\Clients;
 
 use Exception;
 use Illuminate\Support\Facades\Http;
@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 use stdClass;
 use LaravelTwilio\Bases\Resource;
 
-class Twilio
+class TwilioClient
 {
     public function send(Resource $request): stdClass
     {
