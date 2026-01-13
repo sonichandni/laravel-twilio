@@ -15,7 +15,7 @@ class SendMessageTest extends TestCase
     {
         Http::fake([
             "*Messages.json" => Http::response(
-                $this->loadFixture("messageSentSuccussfully.json"),
+                $this->loadFixture("messageSentSuccessfully.json"),
             ),
         ]);
 
