@@ -47,6 +47,8 @@ TWILIO_FROM=+1234567890
 ## Usage
 Send an SMS
 ```
+use LaravelTwilio\Facades\Twilio;
+
 Twilio::sendMessage(
     '+919999999999',
     'Hello from Laravel Twilio'
