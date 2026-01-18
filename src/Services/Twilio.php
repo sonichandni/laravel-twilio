@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
-namespace LaravelTwilio\Services;
+namespace DevelopersDesk\LaravelTwilio\Services;
 
-use LaravelTwilio\Http\Clients\TwilioClient;
-use LaravelTwilio\Http\Resources\SendMessage;
+use RuntimeException;
+use DevelopersDesk\LaravelTwilio\Http\Clients\TwilioClient;
+use DevelopersDesk\LaravelTwilio\Http\Resources\SmsMessage;
+use DevelopersDesk\LaravelTwilio\Http\Resources\WhatsAppTemplateMessage;
 
 class Twilio
 {
@@ -14,16 +16,44 @@ class Twilio
         //
     }
 
-    public function sendMessage(string $to, string $message)
+    public function sms(string $to, string $message)
     {
-        return $this->client->send(
-            new SendMessage($to, $message)
-        );
+        if (! $this->isEnabled()) {
+            throw new RuntimeException(
+                "Twilio credentials are not configured."
+            );
+        }
+
+        return $this->client
+            ->send(
+                new SmsMessage($to, $message)
+            );
     }
 
-    public static function isEnabled(): bool
+    public function whatsapp(
+        string $to,
+        string $contentSid,
+        array $variables = []
+    ) {
+        if (! $this->isEnabled()) {
+            throw new RuntimeException(
+                "Twilio credentials are not configured."
+            );
+        }
+
+        return $this->client
+            ->send(
+                new WhatsAppTemplateMessage(
+                    $to,
+                    $contentSid,
+                    $variables
+                )
+            );
+    }
+
+    public function isEnabled(): bool
     {
-        return config("twilio.twilio.account_sid")
-            && config("twilio.twilio.auth_token");
+        return filled(config("twilio.twilio.account_sid"))
+            && filled(config("twilio.twilio.auth_token"));
     }
 }

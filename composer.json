@@ -1,5 +1,5 @@
 {
-    "name": "sonichandni/laravel-twilio",
+    "name": "developers-desk/laravel-twilio",
     "type": "project",
     "description": "The Laravel Twilio Integration.",
     "keywords": ["framework", "laravel", "twilio", "integration"],
@@ -26,12 +26,12 @@
     },
     "autoload": {
         "psr-4": {
-            "LaravelTwilio\\": "src/"
+            "DevelopersDesk\\LaravelTwilio\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "LaravelTwilio\\Tests\\": "tests/"
+            "DevelopersDesk\\LaravelTwilio\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -40,10 +40,10 @@
         "laravel": {
             "dont-discover": [],
             "providers": [
-                "LaravelTwilio\\Providers\\Service"
+                "DevelopersDesk\\LaravelTwilio\\Providers\\Service"
             ],
             "aliases": {
-                "Twilio": "LaravelTwilio\\Facades\\Twilio"
+                "Twilio": "DevelopersDesk\\LaravelTwilio\\Facades\\Twilio"
             }
         }
     },

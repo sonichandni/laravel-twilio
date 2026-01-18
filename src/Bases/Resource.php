@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace LaravelTwilio\Bases;
+namespace DevelopersDesk\LaravelTwilio\Bases;
 
 use stdClass;
-use LaravelTwilio\Http\Clients\TwilioClient;
+use DevelopersDesk\LaravelTwilio\Http\Clients\TwilioClient;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 abstract class Resource extends JsonResource

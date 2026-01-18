@@ -26,5 +26,6 @@
         <env name="TWILIO_ACCOUNT_SID" value="YOUR_ACCOUNT_SID" />
         <env name="TWILIO_AUTH_TOKEN" value="YOUR_AUTH_TOKEN" />
         <env name="TWILIO_FROM" value="11234567890" />
+        <env name="TWILIO_FROM_WHATSAPP" value="11234567890" />
     </php>
 </phpunit>

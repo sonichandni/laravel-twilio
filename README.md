@@ -1,67 +1,75 @@
 ﻿# Laravel Twilio
 
-A clean, Laravel-idiomatic Twilio integration package focused on SMS messaging, designed with proper separation of concerns and future extensibility.
+A clean, Laravel-idiomatic Twilio integration package for SMS and WhatsApp (template-based) messaging.
 
-This package provides:
-- A Facade-based public API
-- A Service layer for use-cases
-- A dedicated HTTP client for Twilio
-- Request-specific Resource objects
-- Full Laravel package auto-discovery
+Designed with proper separation of concerns, a stable public API, and future extensibility in mind.
 
 ## Features
 - Send SMS using Twilio API
-- Clean Facade API (Twilio::sendMessage())
-- Proper Service → Client → Request architecture
+- Send WhatsApp template messages (ContentSid based)
+- Facade-based API (Twilio::sms(), Twilio::whatsapp())
+- Clean architecture (Service → Client → Resource)
 - Laravel 9 / 10 / 11 / 12 compatible
-- Config-driven credentials
-- Testable design (HTTP layer isolated)
+- Configurable via .env or published config
+- Testable (fixtures + HTTP fakes)
 
 ## Installation
-Since this package is not yet published on Packagist, add the repository
-manually to your project's `composer.json`:<br>
-NOTE: **This step is only required until the package is published on Packagist.**
-```json
-"repositories": [
-  {
-    "type": "vcs",
-    "url": "https://github.com/sonichandni/laravel-twilio"
-  }
-]
-```
-
-Then install the package:
+Install via Composer
 
 ```bash
-composer require sonichandni/laravel-twilio
+composer require developers-desk/laravel-twilio
 ```
 
 Configuration
+Publish config (optional)
+```
+php artisan vendor:publish --tag=twilio-config
+```
+This will publish:
+```
+config/twilio.php
+```
+Publishing is optional.
+If not published, values are read directly from environment variables.
 .env
 ```
 TWILIO_ACCOUNT_SID=your_account_sid
 TWILIO_AUTH_TOKEN=your_auth_token
-TWILIO_FROM=+1234567890
+TWILIO_FROM=1234567890
+TWILIO_FROM_WHATSAPP=1234567890
 ```
+<b>Do not rename config keys.</b>
+Only change values. Renaming keys will break the package.
 
 ## Usage
-Send an SMS
+Send SMS
 ```
-use LaravelTwilio\Facades\Twilio;
+use DevelopersDesk\LaravelTwilio\Facades\Twilio;
 
-Twilio::sendMessage(
-    '+919999999999',
-    'Hello from Laravel Twilio'
+Twilio::sms(
+    "+919999999999",
+    "Hello from Laravel Twilio"
 );
 ```
-No imports required — the Facade alias is auto-registered.
+Send WhatsApp Template Message
 
-Check if Twilio is Configured
+Twilio WhatsApp requires templates (ContentSid) for business-initiated messages.
 ```
-if (Twilio::isEnabled()) {
-    Twilio::sendMessage($to, $message);
-}
+use DevelopersDesk\LaravelTwilio\Facades\Twilio;
+
+Twilio::whatsapp(
+    "+919999999999",
+    "HXxxxxxxxxxxxxx",
+    [
+        "1" => "John",
+        "2" => "17-January-2026",
+        "3" => "20-January-2026",
+    ]
+);
 ```
+- ContentVariables are automatically JSON-encoded
+- whatsapp: prefix is handled internally
+- Free-form WhatsApp messages are not supported by default
 
 ## Architecture Overview
 This package follows a clean Laravel package architecture:
@@ -72,36 +80,45 @@ Service (use-cases)
    ↓
 HTTP Client (Twilio transport)
    ↓
-Request Resource (endpoint + payload)
+Resource (request definition)
 ```
 
 Why this matters
-- Easy to extend (WhatsApp, Verify)
-- Easy to test (HTTP isolated)
+- Easy to extend (Verify, Voice, WhatsApp session messages)
+- Easy to test (HTTP layer isolated)
 - No framework leakage into core logic
 - Clear responsibilities
 
 ## Testing
-Package tests are provided and designed to be HTTP-fake friendly.
+- Tests include:
+- Fixture-based tests
+- HTTP-fake-friendly design
+- Optional live credential testing for manual verification
+
 Run tests:
 ```
 vendor/bin/phpunit
 ```
+Live Twilio credentials should be used only for manual smoke testing, not CI.
+
+WhatsApp Notes (Important)
+- WhatsApp template messages only
+- Requires approved ContentSid
+- Free-form messages depend on session state and are intentionally not exposed
+- This avoids unreliable behavior and production issues
 
 ## Roadmap
-- WhatsApp messaging
+- WhatsApp session-based messages (explicit API)
 - Twilio Verify (OTP)
 - Message status lookup
 - Retry & failure handling
 - Laravel Notification channel
 
-## Extending the Package
-- To add a new Twilio feature:
-- Create a new Request class (e.g. SendWhatsAppMessage)
-- Reuse the existing TwilioClient
-- Add a method to the Twilio Service
-- Expose via the Facade
-The public API remains stable.
+## Maintainer Notes
+- Facade aliases are auto-discovered
+- Config keys are treated as public API
+- No business logic in Service Providers
+- Designed for long-term maintenance, not demos
 
 ## License <br>
 MIT © Chandni Soni

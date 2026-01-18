@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelTwilio\Tests;
+namespace DevelopersDesk\LaravelTwilio\Tests;
 
 use Illuminate\Contracts\Console\Kernel;
 

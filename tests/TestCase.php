@@ -1,8 +1,8 @@
 <?php
 
-namespace LaravelTwilio\Tests;
+namespace DevelopersDesk\LaravelTwilio\Tests;
 
-use LaravelTwilio\Providers\Service;
+use DevelopersDesk\LaravelTwilio\Providers\Service;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase

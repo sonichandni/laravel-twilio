@@ -1,0 +1,24 @@
+{
+    "account_sid": "testaccountsid",
+    "api_version": "2010-04-01",
+    "body": "Your appointment is coming up on 17-January-2026 at 5pm",
+    "date_created": "Sun, 18 Jan 2026 12:25:06 +0000",
+    "date_sent": null,
+    "date_updated": "Sun, 18 Jan 2026 12:25:06 +0000",
+    "direction": "outbound-api",
+    "error_code": null,
+    "error_message": null,
+    "from": "whatsapp:+11234567890",
+    "messaging_service_sid": null,
+    "num_media": "0",
+    "num_segments": "1",
+    "price": null,
+    "price_unit": null,
+    "sid": "testsid",
+    "status": "queued",
+    "subresource_uris": {
+        "media": "/2010-04-01/Accounts/testaccountsid/Messages/testsid/Media.json"
+    },
+    "to": "whatsapp:+919016628489",
+    "uri": "/2010-04-01/Accounts/testaccountsid/Messages/testsid.json"
+}

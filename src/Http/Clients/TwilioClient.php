@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace LaravelTwilio\Http\Clients;
+namespace DevelopersDesk\LaravelTwilio\Http\Clients;
 
 use Exception;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use stdClass;
-use LaravelTwilio\Bases\Resource;
+use DevelopersDesk\LaravelTwilio\Bases\Resource;
 
 class TwilioClient
 {
